@@ -6,12 +6,6 @@ out
 dist
 *.tgz
 
-# generated test content
-commands/
-events/
-slash-commands/
-awesome-music-bot/
-
 # code coverage
 coverage
 *.lcov
