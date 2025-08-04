@@ -17,6 +17,7 @@ export const initCommand = new Command("init")
   .option("--docker", "Include Docker configuration")
   .option("--testing", "Include testing setup")
   .option("--linting", "Include ESLint/Prettier")
+  .option("-y, --yes", "Skip prompts and use defaults")
   .action(async (opts: any) => {
     try {
       console.log(

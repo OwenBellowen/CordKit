@@ -49,7 +49,7 @@ jobs:
         run: |
           mkdir test-project
           cd test-project
-          node ../dist/index.js init --name test-bot --template typescript --bot-type general --dotenv --commands --slash
+          node ../dist/index.js init --name test-bot --template typescript --bot-type general --dotenv --commands --slash --yes
           ls -la
           cat package.json
 
