@@ -1,7 +1,49 @@
 // Configuration generators for CordKit projects
 import type { InitOptions } from "../initTemplate";
 
-export function generateTsConfig() {
+interface TSConfig {
+  compilerOptions: {
+    target: string;
+    module: string;
+    moduleResolution: string;
+    allowImportingTsExtensions: boolean;
+    allowSyntheticDefaultImports: boolean;
+    esModuleInterop: boolean;
+    forceConsistentCasingInFileNames: boolean;
+    strict: boolean;
+    skipLibCheck: boolean;
+    resolveJsonModule: boolean;
+    noEmit: boolean;
+  };
+  include: string[];
+  exclude: string[];
+}
+
+interface ESLintConfig {
+  env: {
+    node: boolean;
+    es2022: boolean;
+  };
+  extends: string[];
+  parserOptions: {
+    ecmaVersion: string;
+    sourceType: string;
+  };
+  rules: Record<string, string>;
+  parser?: string;
+  plugins?: string[];
+}
+
+interface PrettierConfig {
+  semi: boolean;
+  trailingComma: string;
+  singleQuote: boolean;
+  printWidth: number;
+  tabWidth: number;
+  useTabs: boolean;
+}
+
+export function generateTsConfig(): TSConfig {
   return {
     compilerOptions: {
       target: "ES2022",
@@ -21,8 +63,8 @@ export function generateTsConfig() {
   };
 }
 
-export function generateESLintConfig(options: InitOptions): any {
-  const baseConfig = {
+export function generateESLintConfig(options: InitOptions): ESLintConfig {
+  const baseConfig: ESLintConfig = {
     env: {
       node: true,
       es2022: true,
@@ -41,14 +83,14 @@ export function generateESLintConfig(options: InitOptions): any {
 
   if (options.template === "typescript") {
     baseConfig.extends.push("@typescript-eslint/recommended");
-    (baseConfig as any).parser = "@typescript-eslint/parser";
-    (baseConfig as any).plugins = ["@typescript-eslint"];
+    baseConfig.parser = "@typescript-eslint/parser";
+    baseConfig.plugins = ["@typescript-eslint"];
   }
 
   return baseConfig;
 }
 
-export function generatePrettierConfig(): any {
+export function generatePrettierConfig(): PrettierConfig {
   return {
     semi: true,
     trailingComma: "es5",

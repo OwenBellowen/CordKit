@@ -122,12 +122,11 @@ Generate new commands, events, and bot components with beautiful interactive pro
 
 ```bash
 cordkit generate                          # Interactive mode with colorful prompts
-cordkit generate --type command --name modkick    # Generate message command
 cordkit generate --type slash-command --name ban  # Generate slash command
 cordkit generate --type event --name memberJoin   # Generate event handler
 
 # Options
-  -t, --type <type>      Component type: command, slash-command, event
+  -t, --type <type>      Component type: slash-command, event
   -n, --name <name>      Component name
   -p, --path <path>      Project path (default: current directory)
   -l, --language <lang>  Language: typescript or javascript (auto-detected)
@@ -135,7 +134,6 @@ cordkit generate --type event --name memberJoin   # Generate event handler
 
 **Supported Components:**
 
-- 📝 **Message Commands**: Traditional `!command` style commands with permission checks
 - ⚡ **Slash Commands**: Modern `/command` style interactions with Discord API
 - 🎯 **Event Handlers**: Discord event listeners (messageCreate, guildMemberAdd, etc.)
 

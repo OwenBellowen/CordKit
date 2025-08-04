@@ -1,8 +1,25 @@
 // Package.json generator for CordKit projects
 import type { InitOptions } from "../initTemplate";
 
-export function generatePackageJson(projectName: string, options: InitOptions) {
-  const pkg: any = {
+interface PackageJson {
+  name: string;
+  version: string;
+  description: string;
+  main: string;
+  type: string;
+  scripts: Record<string, string>;
+  dependencies: Record<string, string>;
+  devDependencies: Record<string, string>;
+  keywords: string[];
+  author: string;
+  license: string;
+}
+
+export function generatePackageJson(
+  projectName: string,
+  options: InitOptions,
+): PackageJson {
+  const pkg: PackageJson = {
     name: projectName,
     version: "1.0.0",
     description: `A Discord.js ${options.botType} bot generated with CordKit`,
@@ -33,8 +50,41 @@ export function generatePackageJson(projectName: string, options: InitOptions) {
   }
 
   if (options.database) {
-    pkg.dependencies.sqlite3 = "^5.1.6";
-    pkg.dependencies.sqlite = "^5.1.1";
+    switch (options.databaseType) {
+      case "postgres":
+        pkg.dependencies.pg = "^8.11.3";
+        if (options.template === "typescript") {
+          pkg.devDependencies["@types/pg"] = "^8.10.9";
+        }
+        break;
+      case "mysql":
+        pkg.dependencies.mysql2 = "^3.6.5";
+        break;
+      case "mongodb":
+        pkg.dependencies.mongodb = "^6.3.0";
+        break;
+      case "redis":
+        pkg.dependencies.ioredis = "^5.3.2";
+        if (options.template === "typescript") {
+          pkg.devDependencies["@types/ioredis"] = "^5.0.4";
+        }
+        break;
+      case "prisma":
+        pkg.dependencies["@prisma/client"] = "^5.7.0";
+        pkg.devDependencies.prisma = "^5.7.0";
+        break;
+      case "mongoose":
+        pkg.dependencies.mongoose = "^8.0.3";
+        if (options.template === "typescript") {
+          pkg.devDependencies["@types/mongoose"] = "^8.0.4";
+        }
+        break;
+      case "sqlite":
+      default:
+        pkg.dependencies.sqlite3 = "^5.1.6";
+        pkg.dependencies.sqlite = "^5.1.1";
+        break;
+    }
   }
 
   if (options.logging) {
@@ -85,10 +135,27 @@ export function generatePackageJson(projectName: string, options: InitOptions) {
   }
 
   // Add bot-type specific dependencies
-  if (options.botType === "music") {
-    pkg.dependencies["@discordjs/voice"] = "^0.16.0";
-    pkg.dependencies.ytdl = "^1.0.9";
-    pkg.dependencies["play-dl"] = "^1.9.7";
+  switch (options.botType) {
+    case "music":
+      pkg.dependencies["@discordjs/voice"] = "^0.16.0";
+      pkg.dependencies.ytdl = "^1.0.9";
+      pkg.dependencies["play-dl"] = "^1.9.7";
+      break;
+    case "economy":
+      pkg.dependencies["quick.db"] = "^9.1.7";
+      break;
+    case "gaming":
+      pkg.dependencies.canvas = "^2.11.2";
+      break;
+    case "ai":
+      pkg.dependencies.openai = "^4.20.1";
+      break;
+    case "moderation":
+      pkg.dependencies["bad-words"] = "^3.0.4";
+      break;
+    case "utility":
+      pkg.dependencies.moment = "^2.29.4";
+      break;
   }
 
   return pkg;

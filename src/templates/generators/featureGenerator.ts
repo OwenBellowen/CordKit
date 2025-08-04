@@ -72,7 +72,7 @@ const PORT = process.env.WEBHOOK_PORT || 3000;
 app.use(express.json());
 
 // Webhook verification middleware
-function verifySignature(req: any, res: any, next: any) {
+function verifySignature(req: express.Request, res: express.Response, next: express.NextFunction) {
   const signature = req.headers['x-hub-signature-256'];
   const secret = process.env.WEBHOOK_SECRET;
   
@@ -198,8 +198,8 @@ ENV NODE_ENV=production
 CMD ["bun", "run", "start"]`;
 }
 
-export function generateDockerCompose(): string {
-  return `version: '3.8'
+export function generateDockerCompose(options?: InitOptions): string {
+  let compose = `version: '3.8'
 
 services:
   discord-bot:
@@ -211,22 +211,91 @@ services:
       - .env
     volumes:
       - ./data:/app/data
-      - ./logs:/app/logs
+      - ./logs:/app/logs`;
+
+  if (options?.webhooks) {
+    compose += `
     ports:
-      - "3000:3000"
+      - "3000:3000"`;
+  }
+
+  if (options?.database) {
+    switch (options.databaseType) {
+      case "postgres":
+        compose += `
     depends_on:
-      - redis
+      - postgres
 
-  redis:
-    image: redis:7-alpine
+  postgres:
+    image: postgres:15
     restart: unless-stopped
+    environment:
+      POSTGRES_DB: botdb
+      POSTGRES_USER: bot
+      POSTGRES_PASSWORD: password
     volumes:
-      - redis_data:/data
+      - postgres_data:/var/lib/postgresql/data
     ports:
-      - "6379:6379"
+      - "5432:5432"`;
+        break;
+      case "mysql":
+        compose += `
+    depends_on:
+      - mysql
 
-volumes:
-  redis_data:`;
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: botdb
+      MYSQL_USER: bot
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"`;
+        break;
+      case "mongodb":
+        compose += `
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: botdb
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"`;
+        break;
+    }
+  }
+
+  // Add volumes section if databases are used
+  if (options?.database && options.databaseType !== "sqlite") {
+    compose += `
+
+volumes:`;
+    switch (options.databaseType) {
+      case "postgres":
+        compose += `
+  postgres_data:`;
+        break;
+      case "mysql":
+        compose += `
+  mysql_data:`;
+        break;
+      case "mongodb":
+        compose += `
+  mongodb_data:`;
+        break;
+    }
+  }
+
+  return compose;
 }
 
 export function generateDockerIgnore(): string {

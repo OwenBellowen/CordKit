@@ -8,10 +8,16 @@ export const initCommand = new Command("init")
   .option("-n, --name <name>", "Project name")
   .option("-t, --template <type>", "Project template: typescript or javascript")
   .option("--dotenv", "Include dotenv support")
-  .option("--commands", "Include command folders")
-  .option("--slash", "Include slash command support")
-  .option("--bot-type <type>", "Bot type: general, music, moderation, utility")
-  .option("--database", "Include database support (SQLite)")
+  .option("--commands", "Include slash commands")
+  .option(
+    "--bot-type <type>",
+    "Bot type: general, music, moderation, utility, economy, gaming, ai",
+  )
+  .option("--database", "Include database support")
+  .option(
+    "--database-type <type>",
+    "Database type: sqlite, postgres, mysql, mongodb, redis, prisma, mongoose",
+  )
   .option("--logging", "Include advanced logging")
   .option("--webhooks", "Include webhook support")
   .option("--docker", "Include Docker configuration")

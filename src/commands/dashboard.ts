@@ -68,8 +68,6 @@ function analyzeProject(projectPath: string): ProjectStats {
   if (pkg.devDependencies?.eslint) features.push("linting");
   if (existsSync(join(projectPath, "Dockerfile"))) features.push("docker");
   if (existsSync(join(projectPath, "commands"))) features.push("commands");
-  if (existsSync(join(projectPath, "slash-commands")))
-    features.push("slash-commands");
   if (existsSync(join(projectPath, "plugins"))) features.push("plugins");
 
   // Check for music bot features
@@ -267,6 +265,9 @@ function getBotTypeEmoji(type?: string): string {
     music: "🎵",
     moderation: "🛡️",
     utility: "🔧",
+    economy: "💰",
+    gaming: "🎮",
+    ai: "🧠",
   };
   return emojis[type || "general"] || "🤖";
 }
@@ -281,7 +282,6 @@ function getFeatureEmoji(feature: string): string {
     linting: "🔍",
     docker: "🐳",
     commands: "⚡",
-    "slash-commands": "🔗",
     plugins: "🔌",
     music: "🎵",
   };

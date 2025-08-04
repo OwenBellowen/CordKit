@@ -21,7 +21,7 @@
     "test": "bun run index.ts --help",
     "test:build": "bun run build && node dist/index.js --help",
     "test:npx": "npm pack && npx ./cordkit-1.6.3.tgz --help",
-    "test:publish": "npm run build && npm run test:build && echo 'Package ready for publishing!'",
+    "test:publish": "bun run build && bun run test:build && echo 'Package ready for publishing!'",
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "clean": "rm -rf dist *.tgz",

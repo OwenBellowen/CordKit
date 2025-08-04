@@ -68,17 +68,14 @@ export const listCommand = new Command("list")
       console.log(
         chalk.white("  • ") +
           chalk.yellow("commands") +
-          chalk.gray("    - Message command handler (!command)"),
-      );
-      console.log(
-        chalk.white("  • ") +
-          chalk.yellow("slash") +
-          chalk.gray("       - Slash command support (/command)"),
+          chalk.gray("    - Slash command handler (/command)"),
       );
       console.log(
         chalk.white("  • ") +
           chalk.yellow("database") +
-          chalk.gray("    - SQLite database integration"),
+          chalk.gray(
+            "    - Multi-database support (SQLite, PostgreSQL, MySQL, MongoDB, Redis, Prisma, Mongoose)",
+          ),
       );
       console.log(
         chalk.white("  • ") +
