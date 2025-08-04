@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.5.0] - 2024-08-04
 
 ### Added
+
 - **🛠️ Component Generation System**: New `cordkit generate` command for creating Discord bot components
   - Generate message commands with permission checks and error handling
   - Generate slash commands with Discord API integration
@@ -26,22 +27,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Comprehensive .npmignore and .gitignore files
 
 ### Enhanced
+
 - **CLI Interface**: All 9 commands now feature beautiful colored output
 - **Error Handling**: Improved error messages with color coding
 - **User Experience**: Interactive prompts with enhanced visual feedback
 - **Documentation**: Updated README with NPM installation instructions
 
 ### Fixed
+
 - TypeScript compilation errors in generate command
 - Event handler template generation for custom events
 - Build system compatibility with Node.js runtime
 
 ### Technical
+
 - Updated shebang to use Node.js for NPM compatibility
 - Added proper build artifacts and file exclusions
 - Implemented automated testing and release workflows
 
 ### Added
+
 - **Plugin System**: Comprehensive plugin architecture with 6 built-in plugins
   - Auto-moderation plugin with message filtering and user warnings
   - Economy plugin with virtual currency and transaction systems
@@ -75,6 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `cordkit deploy` - Multi-platform deployment configurations
 
 ### Enhanced
+
 - **Bot Templates**: Expanded to 7 specialized bot types
   - General purpose bots with essential features
   - Music bots with voice channel and queue management
@@ -98,6 +104,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Environment-specific configurations
 
 ### Improved
+
 - **Documentation**: Comprehensive README with examples and guides
 - **Error Handling**: Better error messages and validation
 - **User Experience**: Interactive prompts and clear feedback
@@ -106,6 +113,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.3.0] - 2024-01-XX
 
 ### Added
+
 - **Multiple Bot Types**: Specialized templates for different bot purposes
 - **Advanced Features**: Database integration, logging, webhooks, Docker support
 - **Testing Framework**: Jest integration with coverage reporting
@@ -113,6 +121,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Enhanced CLI Options**: Extended flag system for project customization
 
 ### Enhanced
+
 - **Template Generation**: More sophisticated project structure
 - **Bun Optimization**: Better integration with Bun runtime
 - **TypeScript Support**: Improved type safety and modern configurations
@@ -120,12 +129,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.0] - 2024-01-XX
 
 ### Added
+
 - **Deployment Configuration**: Docker and cloud platform support
 - **Environment Management**: Enhanced .env handling and validation
 - **Project Updates**: Command for updating existing projects
 - **Webhook Support**: Express server integration for webhooks
 
 ### Enhanced
+
 - **CLI Interface**: Better command organization and help system
 - **Error Handling**: Improved error messages and validation
 - **File Generation**: More robust file creation and structure
@@ -133,12 +144,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.0] - 2024-01-XX
 
 ### Added
+
 - **JavaScript Support**: Full JavaScript template generation
 - **Slash Commands**: Modern Discord slash command integration
 - **Message Commands**: Traditional prefix-based command system
 - **Interactive CLI**: Prompts for better user experience
 
 ### Enhanced
+
 - **TypeScript Templates**: Improved type safety and modern features
 - **Project Structure**: Better organization and best practices
 - **Documentation**: Enhanced README and inline documentation
@@ -146,6 +159,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2024-01-XX
 
 ### Added
+
 - **Initial Release**: Core CLI functionality for Discord bot generation
 - **TypeScript Support**: Full TypeScript template with modern configurations
 - **Bun Integration**: Optimized for Bun runtime and package management
@@ -154,6 +168,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Interactive Prompts**: User-friendly project setup wizard
 
 ### Features
+
 - Project initialization with template selection
 - Discord.js v14 integration with proper intents
 - Clean project structure with best practices
@@ -165,12 +180,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Development Roadmap
 
 ### Upcoming Features (v1.5.0)
+
 - **Web Dashboard**: Browser-based project management interface
 - **GitHub Integration**: Repository creation and CI/CD setup
 - **Plugin Marketplace**: Community plugin sharing and discovery
 - **Advanced Analytics**: Performance monitoring and optimization suggestions
 
 ### Future Considerations (v2.0.0)
+
 - **GUI Application**: Desktop interface for visual project management
 - **Cloud Services**: Integrated hosting and deployment services
 - **AI Assistant**: Intelligent code generation and suggestions

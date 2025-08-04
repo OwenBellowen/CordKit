@@ -1,10 +1,10 @@
 // Project initialization logic for CordKit
-import prompts from 'prompts';
-import { writeFileSync, mkdirSync, existsSync } from 'fs';
-import { join } from 'path';
+import prompts from "prompts";
+import { writeFileSync, mkdirSync, existsSync } from "fs";
+import { join } from "path";
 
 export interface InitOptions {
-  template: 'typescript' | 'javascript';
+  template: "typescript" | "javascript";
   dotenv: boolean;
   commands: boolean;
   slash: boolean;
@@ -14,69 +14,69 @@ export interface InitOptions {
   docker: boolean;
   testing: boolean;
   linting: boolean;
-  botType: 'general' | 'music' | 'moderation' | 'utility';
+  botType: "general" | "music" | "moderation" | "utility";
 }
 
 export async function promptInitOptions(cliOpts: any): Promise<InitOptions> {
   const questions: prompts.PromptObject[] = [];
-  
+
   // Only prompt for options that weren't provided via CLI flags
   if (!cliOpts.template) {
     questions.push({
-      type: 'select' as const,
-      name: 'template',
-      message: 'Choose a template',
+      type: "select" as const,
+      name: "template",
+      message: "Choose a template",
       choices: [
-        { title: 'TypeScript', value: 'typescript' },
-        { title: 'JavaScript', value: 'javascript' },
+        { title: "TypeScript", value: "typescript" },
+        { title: "JavaScript", value: "javascript" },
       ],
       initial: 0,
     });
   }
-  
+
   if (cliOpts.dotenv === undefined) {
     questions.push({
-      type: 'toggle' as const,
-      name: 'dotenv',
-      message: 'Include dotenv support?',
+      type: "toggle" as const,
+      name: "dotenv",
+      message: "Include dotenv support?",
       initial: true,
-      active: 'yes',
-      inactive: 'no',
+      active: "yes",
+      inactive: "no",
     });
   }
-  
+
   if (cliOpts.commands === undefined) {
     questions.push({
-      type: 'toggle' as const,
-      name: 'commands',
-      message: 'Include command folders?',
+      type: "toggle" as const,
+      name: "commands",
+      message: "Include command folders?",
       initial: true,
-      active: 'yes',
-      inactive: 'no',
+      active: "yes",
+      inactive: "no",
     });
   }
-  
+
   if (cliOpts.slash === undefined) {
     questions.push({
-      type: 'toggle' as const,
-      name: 'slash',
-      message: 'Include slash command support?',
+      type: "toggle" as const,
+      name: "slash",
+      message: "Include slash command support?",
       initial: false,
-      active: 'yes',
-      inactive: 'no',
+      active: "yes",
+      inactive: "no",
     });
   }
 
   if (cliOpts.botType === undefined) {
     questions.push({
-      type: 'select' as const,
-      name: 'botType',
-      message: 'Choose bot type:',
+      type: "select" as const,
+      name: "botType",
+      message: "Choose bot type:",
       choices: [
-        { title: 'General Purpose Bot', value: 'general' },
-        { title: 'Music Bot', value: 'music' },
-        { title: 'Moderation Bot', value: 'moderation' },
-        { title: 'Utility Bot', value: 'utility' },
+        { title: "General Purpose Bot", value: "general" },
+        { title: "Music Bot", value: "music" },
+        { title: "Moderation Bot", value: "moderation" },
+        { title: "Utility Bot", value: "utility" },
       ],
       initial: 0,
     });
@@ -84,105 +84,154 @@ export async function promptInitOptions(cliOpts: any): Promise<InitOptions> {
 
   if (cliOpts.database === undefined) {
     questions.push({
-      type: 'toggle' as const,
-      name: 'database',
-      message: 'Include database support (SQLite)?',
+      type: "toggle" as const,
+      name: "database",
+      message: "Include database support (SQLite)?",
       initial: false,
-      active: 'yes',
-      inactive: 'no',
+      active: "yes",
+      inactive: "no",
     });
   }
 
   if (cliOpts.logging === undefined) {
     questions.push({
-      type: 'toggle' as const,
-      name: 'logging',
-      message: 'Include advanced logging?',
+      type: "toggle" as const,
+      name: "logging",
+      message: "Include advanced logging?",
       initial: true,
-      active: 'yes',
-      inactive: 'no',
+      active: "yes",
+      inactive: "no",
     });
   }
 
   if (cliOpts.webhooks === undefined) {
     questions.push({
-      type: 'toggle' as const,
-      name: 'webhooks',
-      message: 'Include webhook support?',
+      type: "toggle" as const,
+      name: "webhooks",
+      message: "Include webhook support?",
       initial: false,
-      active: 'yes',
-      inactive: 'no',
+      active: "yes",
+      inactive: "no",
     });
   }
 
   if (cliOpts.docker === undefined) {
     questions.push({
-      type: 'toggle' as const,
-      name: 'docker',
-      message: 'Include Docker configuration?',
+      type: "toggle" as const,
+      name: "docker",
+      message: "Include Docker configuration?",
       initial: false,
-      active: 'yes',
-      inactive: 'no',
+      active: "yes",
+      inactive: "no",
     });
   }
 
   if (cliOpts.testing === undefined) {
     questions.push({
-      type: 'toggle' as const,
-      name: 'testing',
-      message: 'Include testing setup?',
+      type: "toggle" as const,
+      name: "testing",
+      message: "Include testing setup?",
       initial: false,
-      active: 'yes',
-      inactive: 'no',
+      active: "yes",
+      inactive: "no",
     });
   }
 
   if (cliOpts.linting === undefined) {
     questions.push({
-      type: 'toggle' as const,
-      name: 'linting',
-      message: 'Include ESLint/Prettier?',
+      type: "toggle" as const,
+      name: "linting",
+      message: "Include ESLint/Prettier?",
       initial: true,
-      active: 'yes',
-      inactive: 'no',
+      active: "yes",
+      inactive: "no",
     });
   }
 
   const answers = questions.length ? await prompts(questions) : {};
-  
+
   return {
-    template: cliOpts.template || answers.template || 'typescript',
-    dotenv: cliOpts.dotenv !== undefined ? cliOpts.dotenv : (answers.dotenv !== undefined ? answers.dotenv : true),
-    commands: cliOpts.commands !== undefined ? cliOpts.commands : (answers.commands !== undefined ? answers.commands : true),
-    slash: cliOpts.slash !== undefined ? cliOpts.slash : (answers.slash !== undefined ? answers.slash : false),
-    botType: cliOpts.botType || answers.botType || 'general',
-    database: cliOpts.database !== undefined ? cliOpts.database : (answers.database !== undefined ? answers.database : false),
-    logging: cliOpts.logging !== undefined ? cliOpts.logging : (answers.logging !== undefined ? answers.logging : true),
-    webhooks: cliOpts.webhooks !== undefined ? cliOpts.webhooks : (answers.webhooks !== undefined ? answers.webhooks : false),
-    docker: cliOpts.docker !== undefined ? cliOpts.docker : (answers.docker !== undefined ? answers.docker : false),
-    testing: cliOpts.testing !== undefined ? cliOpts.testing : (answers.testing !== undefined ? answers.testing : false),
-    linting: cliOpts.linting !== undefined ? cliOpts.linting : (answers.linting !== undefined ? answers.linting : true),
+    template: cliOpts.template || answers.template || "typescript",
+    dotenv:
+      cliOpts.dotenv !== undefined
+        ? cliOpts.dotenv
+        : answers.dotenv !== undefined
+          ? answers.dotenv
+          : true,
+    commands:
+      cliOpts.commands !== undefined
+        ? cliOpts.commands
+        : answers.commands !== undefined
+          ? answers.commands
+          : true,
+    slash:
+      cliOpts.slash !== undefined
+        ? cliOpts.slash
+        : answers.slash !== undefined
+          ? answers.slash
+          : false,
+    botType: cliOpts.botType || answers.botType || "general",
+    database:
+      cliOpts.database !== undefined
+        ? cliOpts.database
+        : answers.database !== undefined
+          ? answers.database
+          : false,
+    logging:
+      cliOpts.logging !== undefined
+        ? cliOpts.logging
+        : answers.logging !== undefined
+          ? answers.logging
+          : true,
+    webhooks:
+      cliOpts.webhooks !== undefined
+        ? cliOpts.webhooks
+        : answers.webhooks !== undefined
+          ? answers.webhooks
+          : false,
+    docker:
+      cliOpts.docker !== undefined
+        ? cliOpts.docker
+        : answers.docker !== undefined
+          ? answers.docker
+          : false,
+    testing:
+      cliOpts.testing !== undefined
+        ? cliOpts.testing
+        : answers.testing !== undefined
+          ? answers.testing
+          : false,
+    linting:
+      cliOpts.linting !== undefined
+        ? cliOpts.linting
+        : answers.linting !== undefined
+          ? answers.linting
+          : true,
   };
 }
 
-export async function generateProject(options: InitOptions, projectName?: string) {
+export async function generateProject(
+  options: InitOptions,
+  projectName?: string,
+) {
   let finalProjectName = projectName;
-  
+
   // Prompt for project name if not provided
   if (!finalProjectName) {
     const projectNamePrompt = await prompts({
-      type: 'text' as const,
-      name: 'projectName',
-      message: 'Project name:',
-      initial: 'my-discord-bot',
-      validate: (value: string) => value.length > 0 ? true : 'Project name is required'
+      type: "text" as const,
+      name: "projectName",
+      message: "Project name:",
+      initial: "my-discord-bot",
+      validate: (value: string) =>
+        value.length > 0 ? true : "Project name is required",
     });
     finalProjectName = projectNamePrompt.projectName;
   }
 
   // Ensure we have a project name
   if (!finalProjectName) {
-    console.error('❌ Project name is required!');
+    console.error("❌ Project name is required!");
     process.exit(1);
   }
 
@@ -198,141 +247,156 @@ export async function generateProject(options: InitOptions, projectName?: string
   mkdirSync(projectPath, { recursive: true });
 
   // Generate package.json
-  console.log('📦 Generating package.json...');
+  console.log("📦 Generating package.json...");
   const packageJson = generatePackageJson(finalProjectName, options);
-  writeFileSync(join(projectPath, 'package.json'), JSON.stringify(packageJson, null, 2));
+  writeFileSync(
+    join(projectPath, "package.json"),
+    JSON.stringify(packageJson, null, 2),
+  );
 
   // Generate .env file if dotenv is enabled
   if (options.dotenv) {
-    console.log('🔐 Generating .env file...');
+    console.log("🔐 Generating .env file...");
     const envContent = generateEnvFile();
-    writeFileSync(join(projectPath, '.env'), envContent);
-    
+    writeFileSync(join(projectPath, ".env"), envContent);
+
     // Also create .env.example
     const envExampleContent = generateEnvExampleFile();
-    writeFileSync(join(projectPath, '.env.example'), envExampleContent);
+    writeFileSync(join(projectPath, ".env.example"), envExampleContent);
   }
 
   // Generate main bot file
-  console.log(`🤖 Generating main bot file (index.${options.template === 'typescript' ? 'ts' : 'js'})...`);
+  console.log(
+    `🤖 Generating main bot file (index.${options.template === "typescript" ? "ts" : "js"})...`,
+  );
   const mainFile = generateMainFile(options);
-  const mainFileName = `index.${options.template === 'typescript' ? 'ts' : 'js'}`;
+  const mainFileName = `index.${options.template === "typescript" ? "ts" : "js"}`;
   writeFileSync(join(projectPath, mainFileName), mainFile);
 
   // Generate commands folder and sample command if enabled
   if (options.commands) {
-    console.log('⚡ Creating commands folder...');
-    const commandsPath = join(projectPath, 'commands');
+    console.log("⚡ Creating commands folder...");
+    const commandsPath = join(projectPath, "commands");
     mkdirSync(commandsPath, { recursive: true });
-    
+
     const sampleCommand = generateSampleCommand(options);
-    const commandFileName = `ping.${options.template === 'typescript' ? 'ts' : 'js'}`;
+    const commandFileName = `ping.${options.template === "typescript" ? "ts" : "js"}`;
     writeFileSync(join(commandsPath, commandFileName), sampleCommand);
   }
 
   // Generate slash command if enabled
   if (options.slash) {
-    console.log('🔗 Creating slash commands...');
-    const slashCommandsPath = join(projectPath, 'slash-commands');
+    console.log("🔗 Creating slash commands...");
+    const slashCommandsPath = join(projectPath, "slash-commands");
     mkdirSync(slashCommandsPath, { recursive: true });
-    
+
     const slashCommand = generateSlashCommand(options);
-    const slashFileName = `ping.${options.template === 'typescript' ? 'ts' : 'js'}`;
+    const slashFileName = `ping.${options.template === "typescript" ? "ts" : "js"}`;
     writeFileSync(join(slashCommandsPath, slashFileName), slashCommand);
   }
 
   // Generate database configuration if enabled
   if (options.database) {
-    console.log('🗄️ Setting up database...');
-    const dbPath = join(projectPath, 'database');
+    console.log("🗄️ Setting up database...");
+    const dbPath = join(projectPath, "database");
     mkdirSync(dbPath, { recursive: true });
-    
+
     const dbSchema = generateDatabaseSchema(options);
-    const dbFileName = `schema.${options.template === 'typescript' ? 'ts' : 'js'}`;
+    const dbFileName = `schema.${options.template === "typescript" ? "ts" : "js"}`;
     writeFileSync(join(dbPath, dbFileName), dbSchema);
   }
 
   // Generate logging configuration if enabled
   if (options.logging) {
-    console.log('📝 Setting up logging...');
-    const utilsPath = join(projectPath, 'utils');
+    console.log("📝 Setting up logging...");
+    const utilsPath = join(projectPath, "utils");
     mkdirSync(utilsPath, { recursive: true });
-    
+
     const logger = generateLogger(options);
-    const loggerFileName = `logger.${options.template === 'typescript' ? 'ts' : 'js'}`;
+    const loggerFileName = `logger.${options.template === "typescript" ? "ts" : "js"}`;
     writeFileSync(join(utilsPath, loggerFileName), logger);
   }
 
   // Generate webhook configuration if enabled
   if (options.webhooks) {
-    console.log('🔗 Setting up webhooks...');
-    const webhooksPath = join(projectPath, 'webhooks');
+    console.log("🔗 Setting up webhooks...");
+    const webhooksPath = join(projectPath, "webhooks");
     mkdirSync(webhooksPath, { recursive: true });
-    
+
     const webhook = generateWebhook(options);
-    const webhookFileName = `server.${options.template === 'typescript' ? 'ts' : 'js'}`;
+    const webhookFileName = `server.${options.template === "typescript" ? "ts" : "js"}`;
     writeFileSync(join(webhooksPath, webhookFileName), webhook);
   }
 
   // Generate Docker configuration if enabled
   if (options.docker) {
-    console.log('🐳 Setting up Docker...');
+    console.log("🐳 Setting up Docker...");
     const dockerfile = generateDockerfile();
-    writeFileSync(join(projectPath, 'Dockerfile'), dockerfile);
-    
+    writeFileSync(join(projectPath, "Dockerfile"), dockerfile);
+
     const dockerCompose = generateDockerCompose();
-    writeFileSync(join(projectPath, 'docker-compose.yml'), dockerCompose);
-    
+    writeFileSync(join(projectPath, "docker-compose.yml"), dockerCompose);
+
     const dockerIgnore = generateDockerIgnore();
-    writeFileSync(join(projectPath, '.dockerignore'), dockerIgnore);
+    writeFileSync(join(projectPath, ".dockerignore"), dockerIgnore);
   }
 
   // Generate testing configuration if enabled
   if (options.testing) {
-    console.log('🧪 Setting up testing...');
-    const testsPath = join(projectPath, 'tests');
+    console.log("🧪 Setting up testing...");
+    const testsPath = join(projectPath, "tests");
     mkdirSync(testsPath, { recursive: true });
-    
+
     const testConfig = generateTestConfig(options);
-    const testFileName = options.template === 'typescript' ? 'jest.config.ts' : 'jest.config.js';
+    const testFileName =
+      options.template === "typescript" ? "jest.config.ts" : "jest.config.js";
     writeFileSync(join(projectPath, testFileName), testConfig);
-    
+
     const sampleTest = generateSampleTest(options);
-    const sampleTestFileName = `bot.test.${options.template === 'typescript' ? 'ts' : 'js'}`;
+    const sampleTestFileName = `bot.test.${options.template === "typescript" ? "ts" : "js"}`;
     writeFileSync(join(testsPath, sampleTestFileName), sampleTest);
   }
 
   // Generate linting configuration if enabled
   if (options.linting) {
-    console.log('🔍 Setting up ESLint and Prettier...');
+    console.log("🔍 Setting up ESLint and Prettier...");
     const eslintConfig = generateESLintConfig(options);
-    writeFileSync(join(projectPath, '.eslintrc.json'), JSON.stringify(eslintConfig, null, 2));
-    
+    writeFileSync(
+      join(projectPath, ".eslintrc.json"),
+      JSON.stringify(eslintConfig, null, 2),
+    );
+
     const prettierConfig = generatePrettierConfig();
-    writeFileSync(join(projectPath, '.prettierrc'), JSON.stringify(prettierConfig, null, 2));
-    
+    writeFileSync(
+      join(projectPath, ".prettierrc"),
+      JSON.stringify(prettierConfig, null, 2),
+    );
+
     const prettierIgnore = generatePrettierIgnore();
-    writeFileSync(join(projectPath, '.prettierignore'), prettierIgnore);
+    writeFileSync(join(projectPath, ".prettierignore"), prettierIgnore);
   }
 
   // Generate TypeScript config if needed
-  if (options.template === 'typescript') {
-    console.log('⚙️ Generating tsconfig.json...');
+  if (options.template === "typescript") {
+    console.log("⚙️ Generating tsconfig.json...");
     const tsConfig = generateTsConfig();
-    writeFileSync(join(projectPath, 'tsconfig.json'), JSON.stringify(tsConfig, null, 2));
+    writeFileSync(
+      join(projectPath, "tsconfig.json"),
+      JSON.stringify(tsConfig, null, 2),
+    );
   }
 
   // Generate README
-  console.log('📝 Generating README.md...');
+  console.log("📝 Generating README.md...");
   const readme = generateReadme(finalProjectName, options);
-  writeFileSync(join(projectPath, 'README.md'), readme);
+  writeFileSync(join(projectPath, "README.md"), readme);
 
   // Generate .gitignore
-  console.log('🙈 Generating .gitignore...');
+  console.log("🙈 Generating .gitignore...");
   const gitignore = generateGitignore();
-  writeFileSync(join(projectPath, '.gitignore'), gitignore);
+  writeFileSync(join(projectPath, ".gitignore"), gitignore);
 
-  console.log('\n✅ Project generated successfully!');
+  console.log("\n✅ Project generated successfully!");
   console.log(`\n📋 Next steps:`);
   console.log(`   cd ${finalProjectName}`);
   console.log(`   bun install`);
@@ -347,79 +411,91 @@ export async function generateProject(options: InitOptions, projectName?: string
 function generatePackageJson(projectName: string, options: InitOptions) {
   const pkg: any = {
     name: projectName,
-    version: '1.0.0',
+    version: "1.0.0",
     description: `A Discord.js ${options.botType} bot generated with CordKit`,
-    main: options.template === 'typescript' ? 'index.ts' : 'index.js',
-    type: 'module',
+    main: options.template === "typescript" ? "index.ts" : "index.js",
+    type: "module",
     scripts: {
-      start: options.template === 'typescript' ? 'bun run index.ts' : 'bun run index.js',
-      dev: options.template === 'typescript' ? 'bun --watch index.ts' : 'bun --watch index.js'
+      start:
+        options.template === "typescript"
+          ? "bun run index.ts"
+          : "bun run index.js",
+      dev:
+        options.template === "typescript"
+          ? "bun --watch index.ts"
+          : "bun --watch index.js",
     },
     dependencies: {
-      'discord.js': '^14.14.1'
+      "discord.js": "^14.14.1",
     },
     devDependencies: {},
-    keywords: ['discord', 'bot', 'discord.js', 'bun', options.botType],
-    author: '',
-    license: 'MIT'
+    keywords: ["discord", "bot", "discord.js", "bun", options.botType],
+    author: "",
+    license: "MIT",
   };
 
   // Add conditional dependencies
   if (options.dotenv) {
-    pkg.dependencies.dotenv = '^16.3.1';
+    pkg.dependencies.dotenv = "^16.3.1";
   }
 
   if (options.database) {
-    pkg.dependencies.sqlite3 = '^5.1.6';
-    pkg.dependencies.sqlite = '^5.1.1';
+    pkg.dependencies.sqlite3 = "^5.1.6";
+    pkg.dependencies.sqlite = "^5.1.1";
   }
 
   if (options.logging) {
-    pkg.dependencies.winston = '^3.11.0';
+    pkg.dependencies.winston = "^3.11.0";
   }
 
   if (options.webhooks) {
-    pkg.dependencies.express = '^4.18.2';
-    if (options.template === 'typescript') {
-      pkg.devDependencies['@types/express'] = '^4.17.21';
+    pkg.dependencies.express = "^4.18.2";
+    if (options.template === "typescript") {
+      pkg.devDependencies["@types/express"] = "^4.17.21";
     }
   }
 
   if (options.testing) {
-    pkg.devDependencies.jest = '^29.7.0';
-    pkg.scripts.test = 'jest';
-    pkg.scripts['test:watch'] = 'jest --watch';
-    pkg.scripts['test:coverage'] = 'jest --coverage';
-    
-    if (options.template === 'typescript') {
-      pkg.devDependencies['ts-jest'] = '^29.1.1';
-      pkg.devDependencies['@types/jest'] = '^29.5.8';
+    pkg.devDependencies.jest = "^29.7.0";
+    pkg.scripts.test = "jest";
+    pkg.scripts["test:watch"] = "jest --watch";
+    pkg.scripts["test:coverage"] = "jest --coverage";
+
+    if (options.template === "typescript") {
+      pkg.devDependencies["ts-jest"] = "^29.1.1";
+      pkg.devDependencies["@types/jest"] = "^29.5.8";
     }
   }
 
   if (options.linting) {
-    pkg.devDependencies.eslint = '^8.56.0';
-    pkg.devDependencies.prettier = '^3.1.0';
-    pkg.scripts.lint = options.template === 'typescript' ? 'eslint . --ext .ts' : 'eslint . --ext .js';
-    pkg.scripts['lint:fix'] = options.template === 'typescript' ? 'eslint . --ext .ts --fix' : 'eslint . --ext .js --fix';
-    pkg.scripts.format = 'prettier --write .';
-    
-    if (options.template === 'typescript') {
-      pkg.devDependencies['@typescript-eslint/eslint-plugin'] = '^6.13.0';
-      pkg.devDependencies['@typescript-eslint/parser'] = '^6.13.0';
+    pkg.devDependencies.eslint = "^8.56.0";
+    pkg.devDependencies.prettier = "^3.1.0";
+    pkg.scripts.lint =
+      options.template === "typescript"
+        ? "eslint . --ext .ts"
+        : "eslint . --ext .js";
+    pkg.scripts["lint:fix"] =
+      options.template === "typescript"
+        ? "eslint . --ext .ts --fix"
+        : "eslint . --ext .js --fix";
+    pkg.scripts.format = "prettier --write .";
+
+    if (options.template === "typescript") {
+      pkg.devDependencies["@typescript-eslint/eslint-plugin"] = "^6.13.0";
+      pkg.devDependencies["@typescript-eslint/parser"] = "^6.13.0";
     }
   }
 
-  if (options.template === 'typescript') {
-    pkg.devDependencies.typescript = '^5.3.0';
-    pkg.devDependencies['@types/node'] = '^20.0.0';
+  if (options.template === "typescript") {
+    pkg.devDependencies.typescript = "^5.3.0";
+    pkg.devDependencies["@types/node"] = "^20.0.0";
   }
 
   // Add bot-type specific dependencies
-  if (options.botType === 'music') {
-    pkg.dependencies['@discordjs/voice'] = '^0.16.0';
-    pkg.dependencies.ytdl = '^1.0.9';
-    pkg.dependencies['play-dl'] = '^1.9.7';
+  if (options.botType === "music") {
+    pkg.dependencies["@discordjs/voice"] = "^0.16.0";
+    pkg.dependencies.ytdl = "^1.0.9";
+    pkg.dependencies["play-dl"] = "^1.9.7";
   }
 
   return pkg;
@@ -446,7 +522,7 @@ GUILD_ID=your_guild_id_here
 }
 
 function generateMainFile(options: InitOptions): string {
-  if (options.template === 'typescript') {
+  if (options.template === "typescript") {
     return generateMainFileTypeScript(options);
   } else {
     return generateMainFileJavaScript(options);
@@ -455,11 +531,11 @@ function generateMainFile(options: InitOptions): string {
 
 function generateMainFileTypeScript(options: InitOptions): string {
   let imports = `import { Client, GatewayIntentBits, Collection } from 'discord.js';`;
-  
+
   if (options.dotenv) {
     imports += `\nimport 'dotenv/config';`;
   }
-  
+
   if (options.commands || options.slash) {
     imports += `\nimport { readdirSync } from 'fs';\nimport { join } from 'path';`;
   }
@@ -476,7 +552,7 @@ function generateMainFileTypeScript(options: InitOptions): string {
     imports += `\nimport { startWebhookServer } from './webhooks/server';`;
   }
 
-  if (options.botType === 'music') {
+  if (options.botType === "music") {
     imports += `\nimport { joinVoiceChannel, createAudioPlayer, createAudioResource } from '@discordjs/voice';`;
   }
 
@@ -484,12 +560,12 @@ function generateMainFileTypeScript(options: InitOptions): string {
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent`;
 
-  if (options.botType === 'music') {
+  if (options.botType === "music") {
     intents += `,
     GatewayIntentBits.GuildVoiceStates`;
   }
 
-  if (options.botType === 'moderation') {
+  if (options.botType === "moderation") {
     intents += `,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildModeration`;
@@ -508,10 +584,10 @@ const client = new Client({
   }
 
   if (options.database) {
-    clientSetup += `\n\n// Initialize database\nlet db: any;\ninitDatabase().then(database => {\n  db = database;\n  ${options.logging ? 'logger.info(\'Database initialized\');' : 'console.log(\'Database initialized\');'}\n});`;
+    clientSetup += `\n\n// Initialize database\nlet db: any;\ninitDatabase().then(database => {\n  db = database;\n  ${options.logging ? "logger.info('Database initialized');" : "console.log('Database initialized');"}\n});`;
   }
 
-  let commandLoader = '';
+  let commandLoader = "";
   if (options.commands) {
     commandLoader = `
 // Load message commands
@@ -524,7 +600,7 @@ for (const file of commandFiles) {
 }`;
   }
 
-  let slashCommandLoader = '';
+  let slashCommandLoader = "";
   if (options.slash) {
     slashCommandLoader = `
 // Load slash commands
@@ -540,8 +616,8 @@ for (const file of slashCommandFiles) {
   let eventHandlers = `
 // When the client is ready, run this code
 client.once('ready', () => {
-  ${options.logging ? 'logger.info(`✅ Ready! Logged in as ${client.user?.tag}`);' : 'console.log(`✅ Ready! Logged in as ${client.user?.tag}`);'}
-  ${options.webhooks ? '\n  startWebhookServer();' : ''}
+  ${options.logging ? "logger.info(`✅ Ready! Logged in as ${client.user?.tag}`);" : "console.log(`✅ Ready! Logged in as ${client.user?.tag}`);"}
+  ${options.webhooks ? "\n  startWebhookServer();" : ""}
 });`;
 
   if (options.commands) {
@@ -560,9 +636,9 @@ client.on('messageCreate', async (message) => {
   if (!command) return;
 
   try {
-    await command.execute(message, args${options.database ? ', db' : ''});
+    await command.execute(message, args${options.database ? ", db" : ""});
   } catch (error) {
-    ${options.logging ? 'logger.error(\'Error executing command:\', error);' : 'console.error(\'Error executing command:\', error);'}
+    ${options.logging ? "logger.error('Error executing command:', error);" : "console.error('Error executing command:', error);"}
     await message.reply('There was an error executing that command.');
   }
 });`;
@@ -579,9 +655,9 @@ client.on('interactionCreate', async (interaction) => {
   if (!command) return;
 
   try {
-    await command.execute(interaction${options.database ? ', db' : ''});
+    await command.execute(interaction${options.database ? ", db" : ""});
   } catch (error) {
-    ${options.logging ? 'logger.error(\'Error executing slash command:\', error);' : 'console.error(\'Error executing slash command:\', error);'}
+    ${options.logging ? "logger.error('Error executing slash command:', error);" : "console.error('Error executing slash command:', error);"}
     const reply = { content: 'There was an error executing that command.', ephemeral: true };
     if (interaction.replied || interaction.deferred) {
       await interaction.followUp(reply);
@@ -593,17 +669,17 @@ client.on('interactionCreate', async (interaction) => {
   }
 
   // Add bot-type specific event handlers
-  if (options.botType === 'moderation') {
+  if (options.botType === "moderation") {
     eventHandlers += `
 
 // Moderation event handlers
 client.on('guildMemberAdd', (member) => {
-  ${options.logging ? 'logger.info(`New member joined: ${member.user.tag}`);' : 'console.log(`New member joined: ${member.user.tag}`);'}
+  ${options.logging ? "logger.info(`New member joined: ${member.user.tag}`);" : "console.log(`New member joined: ${member.user.tag}`);"}
   // Welcome message logic here
 });
 
 client.on('messageDelete', (message) => {
-  ${options.logging ? 'logger.info(`Message deleted: ${message.content}`);' : 'console.log(`Message deleted: ${message.content}`);'}
+  ${options.logging ? "logger.info(`Message deleted: ${message.content}`);" : "console.log(`Message deleted: ${message.content}`);"}
   // Log deleted messages
 });`;
   }
@@ -617,11 +693,11 @@ client.login(process.env.DISCORD_TOKEN);`;
 
 function generateMainFileJavaScript(options: InitOptions): string {
   let imports = `const { Client, GatewayIntentBits, Collection } = require('discord.js');`;
-  
+
   if (options.dotenv) {
     imports += `\nrequire('dotenv').config();`;
   }
-  
+
   if (options.commands) {
     imports += `\nconst { readdirSync } = require('fs');\nconst { join } = require('path');`;
   }
@@ -640,7 +716,7 @@ const client = new Client({
     clientSetup += `\n\n// Add commands collection to client\nclient.commands = new Collection();`;
   }
 
-  let commandLoader = '';
+  let commandLoader = "";
   if (options.commands) {
     commandLoader = `
 // Load message commands
@@ -653,7 +729,7 @@ for (const file of commandFiles) {
 }`;
   }
 
-  let slashCommandLoader = '';
+  let slashCommandLoader = "";
   if (options.slash) {
     slashCommandLoader = `
 // Load slash commands
@@ -728,7 +804,7 @@ client.login(process.env.DISCORD_TOKEN);`;
 }
 
 function generateSampleCommand(options: InitOptions): string {
-  if (options.template === 'typescript') {
+  if (options.template === "typescript") {
     return `import { Message } from 'discord.js';
 
 export const name = 'ping';
@@ -753,7 +829,7 @@ export async function execute(message: Message, args: string[]) {
 }
 
 function generateSlashCommand(options: InitOptions): string {
-  if (options.template === 'typescript') {
+  if (options.template === "typescript") {
     return `import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 
 export const data = new SlashCommandBuilder()
@@ -784,9 +860,9 @@ module.exports = {
 function generateTsConfig() {
   return {
     compilerOptions: {
-      target: 'ES2022',
-      module: 'ESNext',
-      moduleResolution: 'bundler',
+      target: "ES2022",
+      module: "ESNext",
+      moduleResolution: "bundler",
       allowImportingTsExtensions: true,
       allowSyntheticDefaultImports: true,
       esModuleInterop: true,
@@ -794,16 +870,16 @@ function generateTsConfig() {
       strict: true,
       skipLibCheck: true,
       resolveJsonModule: true,
-      noEmit: true
+      noEmit: true,
     },
-    include: ['**/*.ts'],
-    exclude: ['node_modules']
+    include: ["**/*.ts"],
+    exclude: ["node_modules"],
   };
 }
 
 function generateReadme(projectName: string, options: InitOptions): string {
-  const ext = options.template === 'typescript' ? 'ts' : 'js';
-  
+  const ext = options.template === "typescript" ? "ts" : "js";
+
   return `# ${projectName}
 
 A Discord.js bot generated with CordKit.
@@ -812,10 +888,10 @@ A Discord.js bot generated with CordKit.
 
 - 🤖 Discord.js v14
 - ⚡ Bun runtime
-- ${options.template === 'typescript' ? '📘 TypeScript support' : '📙 JavaScript'}
-${options.dotenv ? '- 🔐 Environment variables with dotenv' : ''}
-${options.commands ? '- 📁 Message command handler' : ''}
-${options.slash ? '- 🔗 Slash command support' : ''}
+- ${options.template === "typescript" ? "📘 TypeScript support" : "📙 JavaScript"}
+${options.dotenv ? "- 🔐 Environment variables with dotenv" : ""}
+${options.commands ? "- 📁 Message command handler" : ""}
+${options.slash ? "- 🔗 Slash command support" : ""}
 
 ## Setup
 
@@ -825,12 +901,16 @@ ${options.slash ? '- 🔗 Slash command support' : ''}
    \`\`\`
 
 2. **Configure your bot:**
-   ${options.dotenv ? `
+   ${
+     options.dotenv
+       ? `
    - Copy \`.env.example\` to \`.env\`
    - Add your Discord bot token to \`.env\`
-   ` : `
+   `
+       : `
    - Set your \`DISCORD_TOKEN\` environment variable
-   `}
+   `
+   }
 
 3. **Run the bot:**
    \`\`\`bash
@@ -847,29 +927,37 @@ ${options.slash ? '- 🔗 Slash command support' : ''}
 \`\`\`
 ${projectName}/
 ├── index.${ext}           # Main bot file
-${options.commands ? `├── commands/          # Message commands\n│   └── ping.${ext}       # Example ping command` : ''}
-${options.slash ? `├── slash-commands/     # Slash commands\n│   └── ping.${ext}       # Example slash ping command` : ''}
+${options.commands ? `├── commands/          # Message commands\n│   └── ping.${ext}       # Example ping command` : ""}
+${options.slash ? `├── slash-commands/     # Slash commands\n│   └── ping.${ext}       # Example slash ping command` : ""}
 ├── package.json       # Dependencies and scripts
-${options.dotenv ? `├── .env               # Environment variables (create this)\n├── .env.example       # Environment variables template` : ''}
-${options.template === 'typescript' ? `├── tsconfig.json      # TypeScript configuration` : ''}
+${options.dotenv ? `├── .env               # Environment variables (create this)\n├── .env.example       # Environment variables template` : ""}
+${options.template === "typescript" ? `├── tsconfig.json      # TypeScript configuration` : ""}
 └── README.md          # This file
 \`\`\`
 
 ## Commands
 
-${options.commands ? `### Message Commands
+${
+  options.commands
+    ? `### Message Commands
 - \`!ping\` - Test bot responsiveness
 
-` : ''}${options.slash ? `### Slash Commands
+`
+    : ""
+}${
+    options.slash
+      ? `### Slash Commands
 - \`/ping\` - Test bot responsiveness
 
-` : ''}## Development
+`
+      : ""
+  }## Development
 
 This bot is built with:
 - [Discord.js](https://discord.js.org/) - Discord API library
 - [Bun](https://bun.sh/) - Fast JavaScript runtime
-${options.template === 'typescript' ? '- [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript' : ''}
-${options.dotenv ? '- [dotenv](https://github.com/motdotla/dotenv) - Environment variable management' : ''}
+${options.template === "typescript" ? "- [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript" : ""}
+${options.dotenv ? "- [dotenv](https://github.com/motdotla/dotenv) - Environment variable management" : ""}
 
 ## Getting Your Bot Token
 
@@ -877,7 +965,7 @@ ${options.dotenv ? '- [dotenv](https://github.com/motdotla/dotenv) - Environment
 2. Create a new application
 3. Go to the "Bot" section
 4. Create a bot and copy the token
-5. ${options.dotenv ? 'Add the token to your `.env` file' : 'Set the `DISCORD_TOKEN` environment variable'}
+5. ${options.dotenv ? "Add the token to your `.env` file" : "Set the `DISCORD_TOKEN` environment variable"}
 
 ## Adding the Bot to Your Server
 
@@ -942,7 +1030,7 @@ coverage/
 // New helper functions for additional features
 
 function generateDatabaseSchema(options: InitOptions): string {
-  if (options.template === 'typescript') {
+  if (options.template === "typescript") {
     return `import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import { join } from 'path';
@@ -1050,7 +1138,7 @@ module.exports = {
 }
 
 function generateLogger(options: InitOptions): string {
-  if (options.template === 'typescript') {
+  if (options.template === "typescript") {
     return `import winston from 'winston';
 
 const logger = winston.createLogger({
@@ -1110,7 +1198,7 @@ module.exports = logger;`;
 }
 
 function generateWebhook(options: InitOptions): string {
-  if (options.template === 'typescript') {
+  if (options.template === "typescript") {
     return `import express from 'express';
 import crypto from 'crypto';
 
@@ -1295,7 +1383,7 @@ coverage/
 }
 
 function generateTestConfig(options: InitOptions): string {
-  if (options.template === 'typescript') {
+  if (options.template === "typescript") {
     return `import type { Config } from 'jest';
 
 const config: Config = {
@@ -1328,7 +1416,7 @@ export default config;`;
 }
 
 function generateSampleTest(options: InitOptions): string {
-  if (options.template === 'typescript') {
+  if (options.template === "typescript") {
     return `import { describe, test, expect } from '@jest/globals';
 
 describe('Discord Bot', () => {
@@ -1379,26 +1467,24 @@ function generateESLintConfig(options: InitOptions): any {
   const baseConfig = {
     env: {
       node: true,
-      es2022: true
+      es2022: true,
     },
-    extends: [
-      'eslint:recommended'
-    ],
+    extends: ["eslint:recommended"],
     parserOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module'
+      ecmaVersion: "latest",
+      sourceType: "module",
     },
     rules: {
-      'no-unused-vars': 'warn',
-      'no-console': 'off',
-      'prefer-const': 'error'
-    }
+      "no-unused-vars": "warn",
+      "no-console": "off",
+      "prefer-const": "error",
+    },
   };
 
-  if (options.template === 'typescript') {
-    baseConfig.extends.push('@typescript-eslint/recommended');
-    (baseConfig as any).parser = '@typescript-eslint/parser';
-    (baseConfig as any).plugins = ['@typescript-eslint'];
+  if (options.template === "typescript") {
+    baseConfig.extends.push("@typescript-eslint/recommended");
+    (baseConfig as any).parser = "@typescript-eslint/parser";
+    (baseConfig as any).plugins = ["@typescript-eslint"];
   }
 
   return baseConfig;
@@ -1407,11 +1493,11 @@ function generateESLintConfig(options: InitOptions): any {
 function generatePrettierConfig(): any {
   return {
     semi: true,
-    trailingComma: 'es5',
+    trailingComma: "es5",
     singleQuote: true,
     printWidth: 80,
     tabWidth: 2,
-    useTabs: false
+    useTabs: false,
   };
 }
 

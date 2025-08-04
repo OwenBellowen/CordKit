@@ -12,6 +12,7 @@
 ## 🚀 Features
 
 ### Core Features
+
 - **🤖 Multiple Bot Types**: General, Music, Moderation, Utility, Economy, Gaming, and AI bots
 - **📘 TypeScript & JavaScript**: Full support for both languages with modern configurations
 - **⚡ Bun Optimized**: All generated projects are optimized for Bun runtime
@@ -20,6 +21,7 @@
 - **📊 Analytics Dashboard**: Comprehensive project insights and health monitoring
 
 ### Advanced Capabilities
+
 - **🛡️ Security First**: Built-in rate limiting, input validation, and security best practices
 - **🗄️ Database Integration**: SQLite support with migrations and ORM patterns
 - **🐳 DevOps Ready**: Docker, Railway, Heroku, and PM2 deployment configurations
@@ -32,6 +34,7 @@
 ## 📦 Installation
 
 ### Global Installation (Recommended)
+
 ```bash
 # Install globally with npm
 npm install -g cordkit
@@ -47,6 +50,7 @@ bun add -g cordkit
 ```
 
 ### Local Development Installation
+
 ```bash
 # Clone the repository
 git clone https://github.com/your-username/cordkit
@@ -64,10 +68,12 @@ cordkit init
 ```
 
 ### Prerequisites
+
 - Node.js v18.0.0+ (required for npm installation)
 - [Bun](https://bun.sh/) v1.0.0+ (optional, for optimal performance)
 
 ### Quick Start
+
 ```bash
 # After global installation
 cordkit init
@@ -80,6 +86,7 @@ cordkit init
 ### Core Commands
 
 #### `cordkit init` - Project Generation
+
 Create a new Discord bot project with interactive prompts or CLI flags.
 
 ```bash
@@ -106,6 +113,7 @@ cordkit init [options]
 ```
 
 #### `cordkit generate` - Component Generation
+
 Generate new commands, events, and bot components with interactive prompts.
 
 ```bash
@@ -122,11 +130,13 @@ cordkit generate --type event --name memberJoin   # Generate event handler
 ```
 
 **Supported Components:**
+
 - 📝 **Message Commands**: Traditional `!command` style commands with permission checks
 - ⚡ **Slash Commands**: Modern `/command` style interactions with Discord API
 - 🎯 **Event Handlers**: Discord event listeners (messageCreate, guildMemberAdd, etc.)
 
 #### `cordkit list` - Browse Options
+
 Explore all available templates, features, and plugins.
 
 ```bash
@@ -138,6 +148,7 @@ cordkit list --commands         # CLI commands
 ```
 
 #### `cordkit plugins` - Plugin Management
+
 Install and manage bot plugins for extended functionality.
 
 ```bash
@@ -148,6 +159,7 @@ cordkit plugins --path ./my-bot           # Specify project path
 ```
 
 **Available Plugins:**
+
 - 🛡️ **auto-mod**: Automatic message filtering and user moderation
 - 💰 **economy**: Virtual currency and economy features
 - 📈 **levels**: User experience and leveling system
@@ -156,6 +168,7 @@ cordkit plugins --path ./my-bot           # Specify project path
 - 🎭 **react-roles**: Role assignment via message reactions
 
 #### `cordkit dashboard` - Project Analytics
+
 Get comprehensive insights about your bot project.
 
 ```bash
@@ -166,6 +179,7 @@ cordkit dashboard --path ./my-bot          # Specific project
 ```
 
 **Dashboard Features:**
+
 - 📊 Code statistics and file counts
 - 🎯 Bot type and feature detection
 - 📦 Dependency analysis
@@ -173,6 +187,7 @@ cordkit dashboard --path ./my-bot          # Specific project
 - 💡 Personalized recommendations
 
 #### `cordkit config` - Configuration Management
+
 Manage bot configuration with a powerful settings system.
 
 ```bash
@@ -184,6 +199,7 @@ cordkit config --set features.economy true # Nested configuration
 ```
 
 #### `cordkit migrate` - Project Migration
+
 Update and modernize existing Discord bot projects.
 
 ```bash
@@ -194,6 +210,7 @@ cordkit migrate --specific update-discord-js-v14  # Specific migration
 ```
 
 **Available Migrations:**
+
 - 🔄 **update-discord-js-v14**: Update to Discord.js v14 with breaking changes
 - ⚡ **add-bun-support**: Add Bun runtime optimization
 - 🛡️ **add-error-handling**: Improve error handling and logging
@@ -201,6 +218,7 @@ cordkit migrate --specific update-discord-js-v14  # Specific migration
 - 🔒 **add-security-features**: Add security best practices
 
 #### `cordkit update` - Project Updates
+
 Update dependencies and configurations in existing projects.
 
 ```bash
@@ -211,6 +229,7 @@ cordkit update --config                   # Configuration files
 ```
 
 #### `cordkit deploy` - Deployment Configuration
+
 Generate deployment configurations for various platforms.
 
 ```bash
@@ -224,43 +243,57 @@ cordkit deploy --docker                  # Docker + Docker Compose
 ## 🎯 Bot Templates
 
 ### General Purpose Bot
+
 Basic Discord bot with essential features and extensibility.
+
 ```bash
 cordkit init --bot-type general --commands --slash --dotenv
 ```
 
 ### Music Bot
+
 Advanced music streaming with voice channel support and queue management.
+
 ```bash
 cordkit init --bot-type music --database --logging --docker
 ```
 
 ### Moderation Bot
+
 Comprehensive moderation tools with auto-mod and administration features.
+
 ```bash
 cordkit init --bot-type moderation --database --logging --webhooks
 ```
 
 ### Utility Bot
+
 Server management tools and utility commands for administrators.
+
 ```bash
 cordkit init --bot-type utility --slash --database --testing
 ```
 
 ### Economy Bot
+
 Virtual currency system with trading, shops, and gamification.
+
 ```bash
 cordkit init --bot-type economy --database --logging --linting
 ```
 
 ### Gaming Bot
+
 Gaming-focused features with integrations and competition tools.
+
 ```bash
 cordkit init --bot-type gaming --database --webhooks --docker
 ```
 
 ### AI Bot
+
 AI-powered responses with chat integration and intelligent features.
+
 ```bash
 cordkit init --bot-type ai --webhooks --logging --testing
 ```
@@ -268,6 +301,7 @@ cordkit init --bot-type ai --webhooks --logging --testing
 ## 📁 Generated Project Structure
 
 ### Complete Project Layout
+
 ```
 my-discord-bot/
 ├── 📄 index.ts/js              # Main bot entry point
@@ -310,6 +344,7 @@ my-discord-bot/
 ## ⚡ Quick Examples
 
 ### Create a Music Bot
+
 ```bash
 # Full-featured music bot with all modern tools
 cordkit init \\
@@ -335,6 +370,7 @@ bun run start
 ```
 
 ### Add Economy Features
+
 ```bash
 # Add economy plugin to existing bot
 cordkit plugins --install economy --path ./my-bot
@@ -345,6 +381,7 @@ cordkit config --set economy.startingBalance 1000
 ```
 
 ### Deploy to Production
+
 ```bash
 # Generate deployment configurations
 cordkit deploy --docker --railway
@@ -360,6 +397,7 @@ cordkit dashboard --detailed
 ## 🔧 Advanced Configuration
 
 ### Bot Configuration (config.json)
+
 ```json
 {
   "prefix": "!",
@@ -389,6 +427,7 @@ cordkit dashboard --detailed
 ```
 
 ### Environment Variables (.env)
+
 ```env
 # Discord Configuration
 DISCORD_TOKEN=your_bot_token_here
@@ -414,6 +453,7 @@ ENABLE_ECONOMY=false
 ## 🧪 Development & Testing
 
 ### Running Tests
+
 ```bash
 # Run all tests
 bun run test
@@ -426,6 +466,7 @@ bun run test:watch
 ```
 
 ### Code Quality
+
 ```bash
 # Lint code
 bun run lint
@@ -438,6 +479,7 @@ bun run format
 ```
 
 ### Development Mode
+
 ```bash
 # Start with auto-reload
 bun run dev
@@ -449,6 +491,7 @@ bun run start
 ## 🚀 Deployment
 
 ### Docker Deployment
+
 ```bash
 # Build and run with Docker
 docker build -t my-discord-bot .
@@ -459,6 +502,7 @@ docker-compose up -d
 ```
 
 ### Railway Deployment
+
 ```bash
 # Deploy to Railway
 railway login
@@ -467,6 +511,7 @@ railway up
 ```
 
 ### PM2 Process Management
+
 ```bash
 # Start with PM2
 pm2 start ecosystem.config.js
@@ -488,6 +533,7 @@ CordKit provides comprehensive analytics about your bot projects:
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ### Development Setup
+
 ```bash
 git clone https://github.com/your-repo/cordkit
 cd cordkit
@@ -496,6 +542,7 @@ bun run dev
 ```
 
 ### Adding New Features
+
 1. **New CLI Commands**: Add to `src/commands/`
 2. **Bot Templates**: Update `src/templates/initTemplate.ts`
 3. **Plugins**: Create new plugin generators in `src/commands/plugins.ts`
@@ -516,4 +563,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 **CordKit** - Making Discord bot development faster, easier, and more professional! 🚀
 
-*Built with ❤️ for the Discord developer community*
+_Built with ❤️ for the Discord developer community_
