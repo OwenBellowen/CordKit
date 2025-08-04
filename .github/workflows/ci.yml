@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+      - name: Format code
+        run: bun run format
+
       - name: Lint code
         run: bun run lint
 
