@@ -9,16 +9,19 @@
 
 **CordKit** is the most advanced CLI tool for generating Discord.js bot starter projects with Bun runtime. Create professional Discord bots with TypeScript or JavaScript templates, advanced features, plugins, and deployment configurations in seconds.
 
+Built with a **modular architecture** and **automated CI/CD support**, CordKit streamlines Discord bot development from initialization to production deployment.
+
 ## 🚀 Features
 
 ### Core Features
 
-- **🤖 Multiple Bot Types**: General, Music, Moderation, Utility, Economy, Gaming, and AI bots
+- **🤖 Multiple Bot Types**: General, Music, Moderation, Utility bots with specialized templates
 - **📘 TypeScript & JavaScript**: Full support for both languages with modern configurations
-- **⚡ Bun Optimized**: All generated projects are optimized for Bun runtime
-- **🔌 Plugin System**: Extensible plugin architecture with 6+ built-in plugins
+- **⚡ Bun Optimized**: All generated projects are optimized for Bun runtime performance
 - **🔧 Advanced CLI**: 9 powerful commands for complete project lifecycle management
-- **📊 Analytics Dashboard**: Comprehensive project insights and health monitoring
+- **�️ Component Generation**: Generate commands, events, and components on-demand with `cordkit generate`
+- **🏗️ Modular Architecture**: Maintainable codebase with focused generator modules
+- **🚀 CI/CD Ready**: `--yes` flag for automated deployment pipelines and non-interactive environments
 
 ### Advanced Capabilities
 
@@ -28,8 +31,8 @@
 - **🧪 Testing Framework**: Jest integration with coverage reporting
 - **📝 Advanced Logging**: Winston-based logging with multiple transports
 - **🔍 Code Quality**: ESLint and Prettier with modern configurations
-- **🎨 Colorful CLI**: Rich console output with colors and emojis for better UX
-- **⚡ Component Generation**: Generate commands, events, and components on-demand
+- **🎨 Colorful CLI**: Rich console output with colors and emojis for enhanced UX
+- **📊 Project Analytics**: Comprehensive insights and health monitoring
 
 ## 📦 Installation
 
@@ -90,17 +93,17 @@ cordkit init
 Create a new Discord bot project with interactive prompts or CLI flags.
 
 ```bash
-# Interactive mode
+# Interactive mode (with colorful prompts)
 cordkit init
 
-# With specific options
-cordkit init --name my-bot --template typescript --bot-type music --database --logging --docker
+# Non-interactive mode for CI/CD pipelines
+cordkit init --name my-bot --template typescript --bot-type general --dotenv --commands --slash --yes
 
 # All available options
 cordkit init [options]
   -n, --name <name>      Project name
   -t, --template <type>  typescript or javascript
-  --bot-type <type>      general, music, moderation, utility, economy, gaming, ai
+  --bot-type <type>      general, music, moderation, utility
   --dotenv              Include environment variable management
   --commands            Include message command handler
   --slash               Include slash command support
@@ -110,14 +113,15 @@ cordkit init [options]
   --docker              Include Docker configuration
   --testing             Include Jest testing framework
   --linting             Include ESLint and Prettier
+  -y, --yes             Skip all prompts and use defaults (perfect for CI/CD)
 ```
 
 #### `cordkit generate` - Component Generation
 
-Generate new commands, events, and bot components with interactive prompts.
+Generate new commands, events, and bot components with beautiful interactive prompts.
 
 ```bash
-cordkit generate                       # Interactive mode
+cordkit generate                          # Interactive mode with colorful prompts
 cordkit generate --type command --name modkick    # Generate message command
 cordkit generate --type slash-command --name ban  # Generate slash command
 cordkit generate --type event --name memberJoin   # Generate event handler
@@ -135,60 +139,38 @@ cordkit generate --type event --name memberJoin   # Generate event handler
 - ⚡ **Slash Commands**: Modern `/command` style interactions with Discord API
 - 🎯 **Event Handlers**: Discord event listeners (messageCreate, guildMemberAdd, etc.)
 
-#### `cordkit list` - Browse Options
+#### `cordkit list` - Browse Templates & Features
 
-Explore all available templates, features, and plugins.
+Explore all available templates, bot types, and feature options.
 
 ```bash
-cordkit list                    # Show everything
+cordkit list                    # Show all templates and features
 cordkit list --templates        # Bot templates only
 cordkit list --features         # Core features only
-cordkit list --plugins          # Available plugins
-cordkit list --commands         # CLI commands
+cordkit list --commands         # CLI commands overview
 ```
-
-#### `cordkit plugins` - Plugin Management
-
-Install and manage bot plugins for extended functionality.
-
-```bash
-cordkit plugins --list                    # List available plugins
-cordkit plugins --install economy         # Install economy plugin
-cordkit plugins --remove auto-mod         # Remove auto-mod plugin
-cordkit plugins --path ./my-bot           # Specify project path
-```
-
-**Available Plugins:**
-
-- 🛡️ **auto-mod**: Automatic message filtering and user moderation
-- 💰 **economy**: Virtual currency and economy features
-- 📈 **levels**: User experience and leveling system
-- 🎫 **tickets**: Support ticket system with categories
-- 📊 **polls**: Create polls and voting systems
-- 🎭 **react-roles**: Role assignment via message reactions
 
 #### `cordkit dashboard` - Project Analytics
 
-Get comprehensive insights about your bot project.
+Get comprehensive insights about your bot project health and statistics.
 
 ```bash
-cordkit dashboard                          # Basic analytics
-cordkit dashboard --detailed               # Detailed analysis
-cordkit dashboard --json                   # JSON output
-cordkit dashboard --path ./my-bot          # Specific project
+cordkit dashboard                          # Basic project analytics
+cordkit dashboard --detailed               # Detailed analysis with recommendations
+cordkit dashboard --json                   # JSON output for automation
+cordkit dashboard --path ./my-bot          # Specific project path
 ```
 
 **Dashboard Features:**
 
-- 📊 Code statistics and file counts
+- 📊 Code statistics and complexity analysis
 - 🎯 Bot type and feature detection
-- 📦 Dependency analysis
-- 🏥 Project health checks
-- 💡 Personalized recommendations
+- 📦 Dependency analysis and security insights
+- 🏥 Project health scoring with recommendations
 
 #### `cordkit config` - Configuration Management
 
-Manage bot configuration with a powerful settings system.
+Manage bot settings and configuration with an intuitive interface.
 
 ```bash
 cordkit config --init                     # Initialize config file
@@ -244,10 +226,10 @@ cordkit deploy --docker                  # Docker + Docker Compose
 
 ### General Purpose Bot
 
-Basic Discord bot with essential features and extensibility.
+Essential Discord bot with core features and modern architecture.
 
 ```bash
-cordkit init --bot-type general --commands --slash --dotenv
+cordkit init --bot-type general --commands --slash --dotenv --yes
 ```
 
 ### Music Bot
@@ -255,7 +237,7 @@ cordkit init --bot-type general --commands --slash --dotenv
 Advanced music streaming with voice channel support and queue management.
 
 ```bash
-cordkit init --bot-type music --database --logging --docker
+cordkit init --bot-type music --database --logging --docker --yes
 ```
 
 ### Moderation Bot
@@ -263,7 +245,7 @@ cordkit init --bot-type music --database --logging --docker
 Comprehensive moderation tools with auto-mod and administration features.
 
 ```bash
-cordkit init --bot-type moderation --database --logging --webhooks
+cordkit init --bot-type moderation --database --logging --webhooks --yes
 ```
 
 ### Utility Bot
@@ -271,31 +253,7 @@ cordkit init --bot-type moderation --database --logging --webhooks
 Server management tools and utility commands for administrators.
 
 ```bash
-cordkit init --bot-type utility --slash --database --testing
-```
-
-### Economy Bot
-
-Virtual currency system with trading, shops, and gamification.
-
-```bash
-cordkit init --bot-type economy --database --logging --linting
-```
-
-### Gaming Bot
-
-Gaming-focused features with integrations and competition tools.
-
-```bash
-cordkit init --bot-type gaming --database --webhooks --docker
-```
-
-### AI Bot
-
-AI-powered responses with chat integration and intelligent features.
-
-```bash
-cordkit init --bot-type ai --webhooks --logging --testing
+cordkit init --bot-type utility --slash --database --testing --yes
 ```
 
 ## 📁 Generated Project Structure
@@ -311,21 +269,18 @@ my-discord-bot/
 ├── 📁 slash-commands/          # Slash commands (/command)
 │   ├── ping.ts                 # Example slash ping
 │   └── info.ts                 # Bot information command
-├── 📁 plugins/                 # Installed plugins
-│   ├── economy.ts              # Economy system
-│   └── levels.ts               # Leveling system
 ├── 📁 database/                # Database schema and operations
 │   ├── schema.ts               # Database initialization
 │   └── migrations/             # Database migrations
-├── 📁 utils/                   # Utility functions
+├── 📁 utils/                   # Utility functions and helpers
 │   ├── logger.ts               # Winston logging configuration
-│   └── security.ts             # Security utilities
-├── 📁 webhooks/                # Webhook server
+│   └── security.ts             # Security utilities and validation
+├── 📁 webhooks/                # Webhook server (if enabled)
 │   └── server.ts               # Express webhook server
-├── 📁 tests/                   # Test suites
+├── 📁 tests/                   # Test suites (if enabled)
 │   ├── bot.test.ts             # Bot functionality tests
 │   └── commands.test.ts        # Command tests
-├── 📁 logs/                    # Log files
+├── 📁 logs/                    # Log files directory
 ├── 📁 data/                    # Database files
 ├── 📄 package.json             # Dependencies and scripts
 ├── 📄 config.json              # Bot configuration
@@ -347,15 +302,16 @@ my-discord-bot/
 
 ```bash
 # Full-featured music bot with all modern tools
-cordkit init \\
-  --name "awesome-music-bot" \\
-  --template typescript \\
-  --bot-type music \\
-  --database \\
-  --logging \\
-  --docker \\
-  --testing \\
-  --linting
+cordkit init \
+  --name "awesome-music-bot" \
+  --template typescript \
+  --bot-type music \
+  --database \
+  --logging \
+  --docker \
+  --testing \
+  --linting \
+  --yes
 
 cd awesome-music-bot
 bun install
@@ -369,29 +325,36 @@ cordkit generate --type slash-command --name play
 bun run start
 ```
 
-### Add Economy Features
+### Generate Components Quickly
 
 ```bash
-# Add economy plugin to existing bot
-cordkit plugins --install economy --path ./my-bot
+# Create a new moderation bot
+cordkit init --name mod-bot --bot-type moderation --yes
 
-# Configure economy settings
-cordkit config --set features.economy true
-cordkit config --set economy.startingBalance 1000
+cd mod-bot
+
+# Generate moderation commands
+cordkit generate --type command --name kick
+cordkit generate --type command --name ban
+cordkit generate --type slash-command --name warn
+
+# Generate event handlers
+cordkit generate --type event --name guildMemberAdd
+cordkit generate --type event --name messageDelete
 ```
 
-### Deploy to Production
+### Automated Deployment Pipeline
 
 ```bash
+# Create bot with full CI/CD setup
+cordkit init --name production-bot --docker --testing --linting --yes
+
 # Generate deployment configurations
 cordkit deploy --docker --railway
 
-# Run migrations and updates
-cordkit migrate --all
-cordkit update --dependencies
-
-# Check project health
+# Run health checks and updates
 cordkit dashboard --detailed
+cordkit update --dependencies
 ```
 
 ## 🔧 Advanced Configuration

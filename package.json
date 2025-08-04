@@ -20,7 +20,7 @@
     "dev": "bun --watch index.ts",
     "test": "bun run index.ts --help",
     "test:build": "bun run build && node dist/index.js --help",
-    "test:npx": "npm pack && npx ./cordkit-1.5.0.tgz --help",
+    "test:npx": "npm pack && npx ./cordkit-1.6.3.tgz --help",
     "test:publish": "npm run build && npm run test:build && echo 'Package ready for publishing!'",
     "lint": "prettier --check .",
     "format": "prettier --write .",
@@ -44,16 +44,16 @@
     "scaffolding",
     "development-tools"
   ],
-  "author": "CordKit Contributors",
+  "author": "OwenBellowen",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/cordkit.git"
+    "url": "https://github.com/owenbellowen/cordkit.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/cordkit/issues"
+    "url": "https://github.com/owenbellowen/cordkit/issues"
   },
-  "homepage": "https://github.com/your-username/cordkit#readme",
+  "homepage": "https://github.com/owenbellowen/cordkit#readme",
   "devDependencies": {
     "@types/bun": "latest",
     "@types/chalk": "^2.2.4",
@@ -69,7 +69,7 @@
     "prompts": "^2.4.2"
   },
   "engines": {
-    "node": ">=18.0.0",
+    "node": ">=20.0.0",
     "bun": ">=1.0.0"
   },
   "publishConfig": {

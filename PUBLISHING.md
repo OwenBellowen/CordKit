@@ -10,7 +10,7 @@ This guide helps you set up automatic publishing to NPM when pushing to GitHub.
 # Initialize git if not already done
 git init
 git add .
-git commit -m "feat: initial CordKit v1.5.0 release"
+git commit -m "feat: CordKit v1.6.0 with modular architecture"
 git branch -M main
 
 # Add your GitHub remote
@@ -39,6 +39,11 @@ git push -u origin main
 # Test that everything works
 bun run test:publish
 
+# Verify CI pipeline components
+bun run lint
+bun run build
+bun run test
+
 # Clean up test files
 bun run clean
 ```
@@ -46,6 +51,8 @@ bun run clean
 ## 📦 **NPX/BUNX Compatibility Results**
 
 ### ✅ **NPX Support: WORKING**
+
+The `--yes` flag enhancement ensures perfect CI/CD compatibility:
 
 ```bash
 # Once published, users can run:

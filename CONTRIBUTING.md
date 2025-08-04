@@ -6,10 +6,10 @@ Thank you for your interest in contributing to CordKit! This document provides g
 
 ### Prerequisites
 
-- [Bun](https://bun.sh/) v1.0.0 or higher
-- Node.js v18.0.0+ (for Discord.js compatibility)
+- [Bun](https://bun.sh/) v1.0.0 or higher (primary development runtime)
+- Node.js v18.0.0+ (for Discord.js compatibility and NPM distribution)
 - Git
-- A code editor (VS Code recommended)
+- A code editor (VS Code recommended with TypeScript support)
 
 ### Development Setup
 
@@ -33,9 +33,25 @@ Thank you for your interest in contributing to CordKit! This document provides g
    # Test basic functionality
    bun run index.ts --help
    bun run index.ts init --help
+
+   # Test component generation
+   bun run index.ts generate --help
    ```
 
-4. **Create a Branch**
+4. **Build and Test**
+
+   ```bash
+   # Build the project
+   bun run build
+
+   # Run tests
+   bun run test
+
+   # Check formatting
+   bun run lint
+   ```
+
+5. **Create a Branch**
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -45,10 +61,45 @@ Thank you for your interest in contributing to CordKit! This document provides g
 ### Code Style
 
 - Use TypeScript for all new code
-- Follow existing code formatting and structure
+- Follow existing code formatting (Prettier configuration included)
 - Use descriptive variable and function names
 - Add JSDoc comments for public functions
-- Keep functions small and focused
+- Maintain consistent import organization
+- Follow the modular generator pattern for template-related code
+- Keep functions small and focused (prefer single responsibility principle)
+- Use meaningful imports from the generators module when working with templates
+
+### Project Architecture
+
+CordKit follows a modular architecture for maintainability:
+
+```
+src/
+├── cli.ts                    # Main CLI entry point
+├── commands/                 # CLI command implementations
+│   ├── init.ts              # Project initialization
+│   ├── generate.ts          # Component generation
+│   ├── plugins.ts           # Plugin management
+│   └── ...                  # Other commands
+└── templates/
+    ├── initTemplate.ts      # Main template orchestration (384 lines)
+    └── generators/          # Modular template generators
+        ├── packageGenerator.ts    # package.json generation
+        ├── mainFileGenerator.ts   # Bot main files
+        ├── commandGenerator.ts    # Sample commands
+        ├── configGenerator.ts     # Configuration files
+        ├── databaseGenerator.ts   # Database schemas
+        ├── featureGenerator.ts    # Advanced features
+        ├── envGenerator.ts        # Environment files
+        └── docGenerator.ts        # Documentation
+```
+
+**When contributing to template generation:**
+
+- Add new generators to `src/templates/generators/`
+- Keep generators focused on specific file types
+- Import and use generators in `initTemplate.ts`
+- Follow existing generator patterns and interfaces
 
 ### Commit Messages
 
@@ -60,6 +111,7 @@ type(scope): description
 feat(cli): add new dashboard command
 fix(templates): resolve TypeScript template issue
 docs(readme): update installation instructions
+refactor(generators): split large template file into modules
 ```
 
 Types:
@@ -73,10 +125,11 @@ Types:
 
 ### Pull Request Process
 
-1. **Update Documentation**: Update README.md if needed
-2. **Test Your Changes**: Ensure all functionality works
-3. **Create Clear PR**: Describe what you've changed and why
-4. **Link Issues**: Reference any related issues
+1. **Update Documentation**: Update README.md and relevant docs if needed
+2. **Test Your Changes**: Ensure all functionality works with both Bun and Node.js
+3. **Run Full Test Suite**: `bun run lint && bun run build && bun run test`
+4. **Create Clear PR**: Describe what you've changed and why
+5. **Link Issues**: Reference any related issues
 
 ## 🛠️ Development Areas
 

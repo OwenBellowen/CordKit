@@ -5,6 +5,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2025-08-04
+
+### Added
+
+- **🏗️ Major Code Architecture Refactoring**: Modularized template generation system
+  - Split 1513-line `initTemplate.ts` into 8 focused generator modules (75% size reduction)
+  - New generators: package, env, mainFile, command, config, database, feature, doc
+  - Improved maintainability, testability, and code organization
+  - Each generator has single responsibility for specific file types
+- **⚡ Enhanced Init Command**: Added `--yes` flag for non-interactive CI/CD environments
+  - Skip all prompts and use sensible defaults
+  - Perfect for automated deployment and testing pipelines
+  - Maintains backward compatibility with interactive mode
+- **🔧 Improved CI/CD Pipeline**: Fixed workflow issues and enhanced automation
+  - Resolved formatting and YAML syntax issues in GitHub Actions
+  - Added comprehensive testing for both Bun and Node.js compatibility
+  - Automated NPX/BUNX execution testing
+- **📦 Build System Optimization**: Enhanced bundle generation and compatibility
+  - Maintained 0.38 MB bundle size despite modularization
+  - Improved build performance and reliability
+  - Better error handling and validation
+
+### Enhanced
+
+- **Code Quality**: Significantly improved code organization and maintainability
+- **Developer Experience**: Easier to find, modify, and extend specific functionality
+- **Testing Coverage**: Better isolation testing for individual components
+- **Documentation**: Updated all files to reflect architectural changes
+
+### Fixed
+
+- CI pipeline failures due to interactive prompts in non-interactive environments
+- YAML formatting issues in GitHub Actions workflows
+- Missing CLI flags for complete automation support
+- Code formatting inconsistencies across generator modules
+
+### Technical
+
+- Refactored monolithic template file into modular generator system
+- Added proper import/export structure for generators
+- Implemented comprehensive error handling for CI environments
+- Updated build system to handle new modular architecture
+
 ## [1.5.0] - 2024-08-04
 
 ### Added
@@ -44,10 +87,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated shebang to use Node.js for NPM compatibility
 - Added proper build artifacts and file exclusions
 - Implemented automated testing and release workflows
-
-### Added
-
-- **Plugin System**: Comprehensive plugin architecture with 6 built-in plugins
   - Auto-moderation plugin with message filtering and user warnings
   - Economy plugin with virtual currency and transaction systems
   - Leveling plugin with XP tracking and role rewards
