@@ -1,0 +1,51 @@
+# Source files (only ship compiled dist)
+src/
+index.ts
+tsconfig.json
+
+# Development files
+.eslintrc.json
+.prettierrc
+bun.lock
+
+# Test and example files
+examples/
+tests/
+test/
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Generated test content
+commands/
+events/
+slash-commands/
+awesome-music-bot/
+
+# Development tools
+.vscode/
+.idea/
+*.log
+.DS_Store
+
+# Coverage and logs
+coverage/
+logs/
+*.lcov
+
+# Environment files
+.env
+.env.*
+
+# Cache files
+.eslintcache
+.cache
+*.tsbuildinfo
+
+# Node modules (should be in dependencies)
+node_modules/
+
+# Temporary files
+tmp/
+temp/

@@ -1,0 +1,78 @@
+{
+  "name": "cordkit",
+  "version": "1.5.0",
+  "description": "Advanced CLI tool for generating Discord.js bot starter projects with Bun runtime",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "cordkit": "./dist/index.js"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "bun build index.ts --outdir dist --target node --format esm",
+    "prepublishOnly": "bun run build",
+    "dev": "bun --watch index.ts",
+    "test": "bun run index.ts --help",
+    "test:build": "bun run build && node dist/index.js --help",
+    "test:npx": "npm pack && npx ./cordkit-1.5.0.tgz --help",
+    "test:publish": "npm run build && npm run test:build && echo 'Package ready for publishing!'",
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
+    "clean": "rm -rf dist *.tgz",
+    "version:patch": "npm version patch && git push && git push --tags",
+    "version:minor": "npm version minor && git push && git push --tags",
+    "version:major": "npm version major && git push && git push --tags",
+    "release": "npm run version:patch"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "discord.js",
+    "cli",
+    "generator",
+    "template",
+    "bun",
+    "typescript",
+    "plugins",
+    "automation",
+    "scaffolding",
+    "development-tools"
+  ],
+  "author": "CordKit Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/cordkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/cordkit/issues"
+  },
+  "homepage": "https://github.com/your-username/cordkit#readme",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/chalk": "^2.2.4",
+    "@types/prompts": "^2.4.9",
+    "prettier": "^3.1.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "chalk": "^5.5.0",
+    "commander": "^14.0.0",
+    "prompts": "^2.4.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
