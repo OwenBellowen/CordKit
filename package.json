@@ -1,6 +1,6 @@
 {
   "name": "cordkit",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Advanced CLI tool for generating Discord.js bot starter projects with Bun runtime",
   "main": "dist/index.js",
   "module": "dist/index.js",
